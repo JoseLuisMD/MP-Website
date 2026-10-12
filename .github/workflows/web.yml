@@ -11,7 +11,8 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true   # una ejecución nueva cancela la anterior (si GitHub la deja atascada, no bloquea la web);
+                             # no se pierde nada: cada ejecución reconstruye la web entera con los datos más recientes
 
 jobs:
   construir:
