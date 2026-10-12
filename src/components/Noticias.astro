@@ -1,8 +1,14 @@
 ---
+// La noticia más reciente, destacada; el resto, en páginas de POR_PAGINA que se pasan deslizando
+// (dedo o trackpad) o con las flechas y los indicadores.
 import { favicon, fechaCorta } from '../lib/datos.js';
+
+const POR_PAGINA = 5;
 
 const { noticias = [] } = Astro.props;
 const [primera, ...resto] = noticias;
+const paginas = [];
+for (let i = 0; i < resto.length; i += POR_PAGINA) paginas.push(resto.slice(i, i + POR_PAGINA));
 ---
 <section class="panel" aria-labelledby="titulo-noticias">
   <h2 class="panel__titulo" id="titulo-noticias">Últimas noticias</h2>
@@ -15,17 +21,59 @@ const [primera, ...resto] = noticias;
       <span class="meta"><img class="meta__favicon" src={favicon(primera.enlace)} alt="" width="16" height="16" loading="lazy" onerror="this.remove()" />{primera.fuente} · <time datetime={primera.fecha} data-relativa>{fechaCorta(primera.fecha)}</time></span>
     </a>
   )}
-  <ul class="noticias">
-    {resto.map((n) => (
-      <li>
-        <a class="noticia" href={n.enlace} target="_blank" rel="noopener" title={n.resumen}>
-          {n.imagen && <img src={n.imagen} alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()" />}
-          <span class="noticia__texto">
-            <span class="noticia__titulo">{n.titulo}</span>
-            <span class="meta"><img class="meta__favicon" src={favicon(n.enlace)} alt="" width="16" height="16" loading="lazy" onerror="this.remove()" />{n.fuente} · <time datetime={n.fecha} data-relativa>{fechaCorta(n.fecha)}</time></span>
-          </span>
-        </a>
-      </li>
-    ))}
-  </ul>
+  {paginas.length > 0 && (
+    <div class="paginas" aria-label="Más noticias">
+      {paginas.map((pagina, p) => (
+        <ul class="noticias pagina" aria-label={`Página ${p + 1} de ${paginas.length}`}>
+          {pagina.map((n) => (
+            <li>
+              <a class="noticia" href={n.enlace} target="_blank" rel="noopener" title={n.resumen}>
+                {n.imagen && <img src={n.imagen} alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()" />}
+                <span class="noticia__texto">
+                  <span class="noticia__titulo">{n.titulo}</span>
+                  <span class="meta"><img class="meta__favicon" src={favicon(n.enlace)} alt="" width="16" height="16" loading="lazy" onerror="this.remove()" />{n.fuente} · <time datetime={n.fecha} data-relativa>{fechaCorta(n.fecha)}</time></span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  )}
+  {paginas.length > 1 && (
+    <nav class="paginacion" aria-label="Páginas de noticias">
+      <button type="button" class="paginacion__flecha" data-paso="-1" aria-label="Noticias más recientes">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+      </button>
+      <span class="paginacion__puntos">
+        {paginas.map((_, p) => <button type="button" aria-label={`Página ${p + 1}`}></button>)}
+      </span>
+      <button type="button" class="paginacion__flecha" data-paso="1" aria-label="Noticias anteriores">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+      </button>
+    </nav>
+  )}
 </section>
+
+<script>
+  // Flechas e indicadores de las páginas de noticias (el deslizamiento funciona solo, con CSS)
+  const pista = document.querySelector<HTMLElement>('.paginas');
+  const nav = document.querySelector('.paginacion');
+  if (pista && nav) {
+    const puntos = [...nav.querySelectorAll<HTMLButtonElement>('.paginacion__puntos button')];
+    const [atras, adelante] = nav.querySelectorAll<HTMLButtonElement>('.paginacion__flecha');
+    const actual = () => Math.round(pista.scrollLeft / pista.clientWidth);
+    const ir = (p: number) => pista.scrollTo({ left: p * pista.clientWidth, behavior: 'smooth' });
+    const pintar = () => {
+      const p = actual();
+      puntos.forEach((punto, i) => punto.setAttribute('aria-current', String(i === p)));
+      atras.disabled = p === 0;
+      adelante.disabled = p === puntos.length - 1;
+    };
+    atras.addEventListener('click', () => ir(actual() - 1));
+    adelante.addEventListener('click', () => ir(actual() + 1));
+    puntos.forEach((punto, i) => punto.addEventListener('click', () => ir(i)));
+    pista.addEventListener('scroll', pintar, { passive: true });
+    pintar();
+  }
+</script>

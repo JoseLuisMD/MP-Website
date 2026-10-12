@@ -10,7 +10,7 @@ import { cargarNoticias, cargarVideos } from '../lib/datos.js';
 
 const VIDEOS_EN_PORTADA = 7;   // el destacado + 6 en la cuadrícula
 const SHORTS_EN_PORTADA = 10;
-const NOTICIAS_EN_PORTADA = 10;
+const NOTICIAS_EN_PORTADA = 30;  // la destacada + 29 en páginas de 5
 
 const { videos, shorts } = cargarVideos();
 const [destacado, ...siguientes] = videos.slice(0, VIDEOS_EN_PORTADA);

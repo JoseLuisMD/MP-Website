@@ -373,6 +373,48 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 
 .noticias { list-style: none; margin: 0; padding: 0; }
 .noticias li + li { border-top: 1px solid var(--borde); }
+
+/* Noticias secundarias en páginas: se deslizan en horizontal (dedo, trackpad) o con las flechas */
+.paginas {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  align-items: start;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.paginas::-webkit-scrollbar { display: none; }
+.pagina { scroll-snap-align: start; min-width: 0; }
+.paginacion { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; }
+.paginacion__flecha {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: var(--superficie-2);
+  color: var(--texto);
+  cursor: pointer;
+  transition: border-color 0.2s, opacity 0.2s;
+}
+.paginacion__flecha svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+.paginacion__flecha:hover:not(:disabled) { border-color: rgb(169 217 47 / 0.6); }
+.paginacion__flecha:disabled { opacity: 0.35; cursor: default; }
+.paginacion__puntos { display: flex; gap: 6px; }
+.paginacion__puntos button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: var(--superficie-2);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.paginacion__puntos button[aria-current="true"] { background: var(--verde); transform: scale(1.15); }
 .noticia { display: flex; gap: 12px; padding-block: 12px; }
 .noticia > img { flex: none; width: 64px; height: 64px; object-fit: cover; border-radius: 8px; }
 .noticia__texto { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
