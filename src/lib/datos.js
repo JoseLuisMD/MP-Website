@@ -3,12 +3,16 @@ import videos from '../data/videos.json';
 
 // Las noticias las publica el bot de MP-YT-Discord, que guarda las últimas en noticias_web.json
 const NOTICIAS_URL = 'https://raw.githubusercontent.com/JoseLuisMD/MP-YT-Discord/main/noticias_web.json';
+const esWeb = (url) => typeof url === 'string' && /^https?:\/\//i.test(url);
 
 export async function cargarNoticias() {
   try {
     const r = await fetch(NOTICIAS_URL);
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return await r.json();
+    // Solo enlaces web normales: si un feed trajera algo raro (p. ej. «javascript:»), la noticia se descarta
+    return (await r.json())
+      .filter((n) => esWeb(n.enlace))
+      .map((n) => ({ ...n, imagen: esWeb(n.imagen) ? n.imagen : null }));
   } catch (e) {
     console.warn(`No se pudieron cargar las noticias: ${e.message}`);
     return [];
