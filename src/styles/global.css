@@ -71,6 +71,35 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 @keyframes deriva { 50% { translate: 60px 0; } }
 @media (max-width: 640px) { .nube { display: none; } }
 
+/* Nubes grandes (PC): cruzan el hueco de la derecha y se desvanecen antes de llegar al título */
+.cielo {
+  position: absolute;
+  top: 0;
+  bottom: 50px;
+  right: 0;
+  left: calc(max(16px, (100% - 1200px) / 2) + 740px); /* donde acaba el título */
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 25%, #000 85%, transparent);
+  display: none;
+}
+.nube-grande {
+  position: absolute;
+  left: 100%;
+  width: 152px;
+  height: 52px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 13' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' d='M4 6h12v6H4zM6 4h8v2H6zM2 8h16v4H2zM12 2h12v8H12zM14 0h8v2h-8zM10 4h16v6H10zM24 5h10v7H24zM26 3h6v2h-6zM22 7h14v5H22zM2 10h34v3H2z'/%3E%3Cpath fill='%23d6e6ff' d='M2 12h34v1H2zM6 11h4v1H6zM20 11h8v1h-8z'/%3E%3C/svg%3E") no-repeat center / contain;
+  image-rendering: pixelated;
+  animation: cruzar 70s linear infinite;
+}
+.nube-grande--1 { top: 16px; animation-delay: -20s; }
+.nube-grande--2 { top: 62px; width: 114px; height: 39px; opacity: 0.75; animation-duration: 95s; animation-delay: -70s; }
+.nube-grande--3 { top: 98px; width: 133px; height: 46px; opacity: 0.9; animation-duration: 80s; animation-delay: -45s; }
+@keyframes cruzar { from { left: 100%; } to { left: -160px; } }
+@media (min-width: 1150px) {
+  .cielo { display: block; }
+  .nube { display: none; } /* en PC, solo las grandes */
+}
+
 .marca { display: inline-flex; align-items: center; gap: 18px; }
 .marca__logo {
   flex: none;
