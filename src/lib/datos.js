@@ -1,8 +1,8 @@
 // Datos que usa la página al construirse.
 import videos from '../data/videos.json';
 
-// Las noticias las publica el bot de MP-YT-Discord, que guarda las últimas en noticias_web.json
-const NOTICIAS_URL = 'https://raw.githubusercontent.com/JoseLuisMD/MP-YT-Discord/main/noticias_web.json';
+// Las noticias las publica el bot de MP-YT-Discord, que guarda las últimas en noticias_web.json (en su rama «estado»)
+const NOTICIAS_URL = 'https://raw.githubusercontent.com/JoseLuisMD/MP-YT-Discord/estado/noticias_web.json';
 const esWeb = (url) => typeof url === 'string' && /^https?:\/\//i.test(url);
 
 export async function cargarNoticias() {

@@ -10,7 +10,7 @@ El workflow `.github/workflows/web.yml` se ejecuta en cada `push` a `main` y cua
 1. `npm run videos` lee el RSS de los canales de YouTube y añade los vídeos nuevos a `src/data/videos.json`
    (el RSS solo trae los 15 últimos, así que este JSON guarda el historial). Si hay cambios, los sube al repo.
 2. `npm run build` construye la web. Las noticias se descargan en ese momento de `noticias_web.json`
-   en el repo [MP-YT-Discord](https://github.com/JoseLuisMD/MP-YT-Discord), donde el bot las guarda al publicarlas.
+   en el repo [MP-YT-Discord](https://github.com/JoseLuisMD/MP-YT-Discord) (rama `estado`), donde el bot las guarda al publicarlas.
 3. La web se publica en GitHub Pages.
 
 No hay base de datos: los datos son archivos JSON en los repositorios.
