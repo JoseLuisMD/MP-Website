@@ -140,8 +140,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 /* ---------- Secciones ---------- */
 .seccion__cabecera {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 16px;
 }
 .seccion__titulo, .panel__titulo {
@@ -166,6 +168,23 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .ver-mas { color: var(--texto-suave); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
 .ver-mas:hover { color: var(--verde); }
 .ver-mas::after { content: ' →'; }
+.seccion__acciones { display: flex; align-items: center; gap: 16px; }
+.suscribir {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px 6px 11px;
+  border-radius: 999px;
+  background: #ff0000;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 2px 2px 0 var(--tinta);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+}
+.suscribir svg { width: 16px; height: 16px; fill: #fff; }
+.suscribir:hover { background: #e00000; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--tinta); }
+.suscribir:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--tinta); }
 
 .meta { margin: 0; color: var(--texto-suave); font-size: 0.82rem; }
 .meta__favicon { display: inline-block; width: 14px; height: 14px; margin-right: 6px; vertical-align: -2px; border-radius: 3px; }

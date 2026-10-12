@@ -5,6 +5,7 @@ import TarjetaVideo from '../components/TarjetaVideo.astro';
 import TarjetaShort from '../components/TarjetaShort.astro';
 import Enlaces from '../components/Enlaces.astro';
 import Noticias from '../components/Noticias.astro';
+import Suscribir from '../components/Suscribir.astro';
 import { cargarNoticias, cargarVideos } from '../lib/datos.js';
 
 const VIDEOS_EN_PORTADA = 7;   // el destacado + 6 en la cuadrícula
@@ -25,7 +26,10 @@ const noticias = (await cargarNoticias()).slice(0, NOTICIAS_EN_PORTADA);
         <section aria-labelledby="titulo-videos">
           <div class="seccion__cabecera">
             <h2 class="seccion__titulo" id="titulo-videos">Vídeos</h2>
-            <a class="ver-mas" href="https://www.youtube.com/@MundosPixelados/videos" target="_blank" rel="noopener">Ver todos</a>
+            <div class="seccion__acciones">
+              <Suscribir canal="UCLD3BqL4n2GKmitkEQGCoAQ" nombre="Mundos Pixelados" />
+              <a class="ver-mas" href="https://www.youtube.com/@MundosPixelados/videos" target="_blank" rel="noopener">Ver todos</a>
+            </div>
           </div>
           <div class="cuadricula-videos">
             {siguientes.map((v) => <TarjetaVideo video={v} />)}
@@ -37,7 +41,10 @@ const noticias = (await cargarNoticias()).slice(0, NOTICIAS_EN_PORTADA);
         <section aria-labelledby="titulo-shorts">
           <div class="seccion__cabecera">
             <h2 class="seccion__titulo" id="titulo-shorts">Shorts</h2>
-            <a class="ver-mas" href="https://www.youtube.com/@MundosPixeladosShorts/shorts" target="_blank" rel="noopener">Ver todos</a>
+            <div class="seccion__acciones">
+              <Suscribir canal="UCb3jFYgTbBLjDDOlZiD-2kg" nombre="Mundos Pixelados Shorts" />
+              <a class="ver-mas" href="https://www.youtube.com/@MundosPixeladosShorts/shorts" target="_blank" rel="noopener">Ver todos</a>
+            </div>
           </div>
           <div class="fila-shorts">
             {shorts.slice(0, SHORTS_EN_PORTADA).map((v) => <TarjetaShort video={v} />)}
