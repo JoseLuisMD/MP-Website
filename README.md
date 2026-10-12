@@ -5,7 +5,7 @@ noticias que publica el bot. Hecha con [Astro](https://astro.build) y publicada 
 
 ## Cómo se actualiza
 
-El workflow `.github/workflows/web.yml` se ejecuta en cada `push` a `main` y cada hora:
+El workflow `.github/workflows/web.yml` se ejecuta en cada `push` a `main` y cuando se lanza desde fuera (`workflow_dispatch`):
 
 1. `npm run videos` lee el RSS de los canales de YouTube y añade los vídeos nuevos a `src/data/videos.json`
    (el RSS solo trae los 15 últimos, así que este JSON guarda el historial). Si hay cambios, los sube al repo.

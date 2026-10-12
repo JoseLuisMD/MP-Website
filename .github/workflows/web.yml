@@ -2,9 +2,7 @@ name: Publicar web
 on:
   push:
     branches: [main]
-  schedule:
-    - cron: "17 * * * *"      # cada hora: vídeos nuevos y noticias del bot
-  workflow_dispatch:          # a mano (o desde cron-job.org)
+  workflow_dispatch:          # a mano o desde fuera (cron-job.org / el bot); el cron de GitHub no es fiable
 
 permissions:
   contents: write             # guardar src/data/videos.json
