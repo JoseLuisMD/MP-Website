@@ -173,18 +173,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 6px 13px 6px 11px;
+  padding: 5px 13px 5px 11px;
+  border: 1.5px solid #e0463e;
   border-radius: 999px;
-  background: #ff0000;
-  color: #fff;
+  color: #ff8a84;
   font-size: 0.85rem;
   font-weight: 600;
-  box-shadow: 2px 2px 0 var(--tinta);
-  transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
-.suscribir svg { width: 16px; height: 16px; fill: #fff; }
-.suscribir:hover { background: #e00000; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--tinta); }
-.suscribir:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--tinta); }
+.suscribir svg { width: 16px; height: 16px; fill: #ff5a52; }
+.suscribir:hover { background: rgb(224 70 62 / 0.15); color: #ffb0ab; }
 
 .meta { margin: 0; color: var(--texto-suave); font-size: 0.82rem; }
 .meta__favicon { display: inline-block; width: 14px; height: 14px; margin-right: 6px; vertical-align: -2px; border-radius: 3px; }
