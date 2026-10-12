@@ -272,14 +272,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .panel__titulo { margin-bottom: 16px; }
 
 /* Una columna en el lateral; varias cuando el lateral pasa debajo (tablet y móvil) */
-.enlaces { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; }
+.enlaces { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px; }
 .enlace {
   --color-red: var(--verde);
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 10px;
+  gap: 10px;
+  padding: 6px 10px 6px 6px;
+  border-radius: 9px;
   background: var(--superficie-2);
   border: 1px solid transparent;
   transition: border-color 0.2s, transform 0.2s, background 0.2s;
@@ -291,18 +291,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 }
 .enlace__icono {
   flex: none;
-  width: 38px;
-  height: 38px;
+  width: 28px;
+  height: 28px;
   display: grid;
   place-items: center;
-  border-radius: 9px;
+  border-radius: 7px;
   background: var(--color-red);
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.15); /* para que los iconos negros (X, Threads) se vean */
 }
-.enlace__icono svg { width: 20px; height: 20px; fill: #fff; }
-.enlace__texto { display: flex; flex-direction: column; min-width: 0; flex: 1; }
-.enlace__nombre { font-weight: 600; font-size: 0.95rem; }
-.enlace__detalle { color: var(--texto-suave); font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.enlace__icono svg { width: 16px; height: 16px; fill: #fff; }
+.enlace__nombre { flex: 1; min-width: 0; font-weight: 600; font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .enlace__flecha { width: 18px; height: 18px; fill: none; stroke: var(--texto-suave); stroke-width: 2; transition: stroke 0.2s; }
 .enlace:hover .enlace__flecha { stroke: var(--texto); }
 
