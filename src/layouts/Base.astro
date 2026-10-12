@@ -1,8 +1,39 @@
 ---
 import '../styles/global.css';
 import { ruta } from '../lib/datos.js';
+import { REDES } from '../data/redes.js';
 
-const { titulo = 'Mundos Pixelados', descripcion = 'Vídeos, shorts y noticias de videojuegos de Mundos Pixelados.' } = Astro.props;
+const {
+  titulo = 'Mundos Pixelados | Análisis, curiosidades y tops de videojuegos',
+  descripcion = 'Somos 2 amigos a los que les apasionan los videojuegos. Análisis, curiosidades, tops, estadísticas y noticias en vídeo.',
+} = Astro.props;
+
+const canonica = new URL(Astro.url.pathname, Astro.site);
+const imagen = new URL(ruta('og.jpg'), Astro.site);
+
+// Datos estructurados (schema.org): le dicen a Google qué es la web y cuáles son sus redes oficiales
+const inicio = new URL('/', Astro.site).href;
+const datos = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${inicio}#organizacion`,
+      name: 'Mundos Pixelados',
+      url: inicio,
+      logo: new URL(ruta('logo.jpg'), Astro.site).href,
+      sameAs: REDES.filter((r) => r.url).map((r) => r.url),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${inicio}#web`,
+      name: 'Mundos Pixelados',
+      url: inicio,
+      inLanguage: 'es-ES',
+      publisher: { '@id': `${inicio}#organizacion` },
+    },
+  ],
+};
 ---
 <!doctype html>
 <html lang="es">
@@ -11,16 +42,23 @@ const { titulo = 'Mundos Pixelados', descripcion = 'Vídeos, shorts y noticias d
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
     <meta property="og:title" content={titulo} />
     <meta property="og:description" content={descripcion} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={new URL(ruta('og.jpg'), Astro.site)} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:site_name" content="Mundos Pixelados" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:image" content={imagen} />
+    <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#23628e" />
     <link rel="icon" type="image/png" href={ruta('favicon.png')} />
     <link rel="apple-touch-icon" href={ruta('apple-touch-icon.jpg')} />
+    <link rel="sitemap" href={ruta('sitemap.xml')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(datos)} />
   </head>
   <body>
     <slot />

@@ -111,6 +111,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 
 .marca__texto { display: flex; flex-direction: column; gap: 10px; }
 .marca__nombre {
+  margin: 0;
   font-family: var(--fuente-pixel);
   font-weight: 700;
   font-size: clamp(1.5rem, 4.5vw, 2.8rem);
