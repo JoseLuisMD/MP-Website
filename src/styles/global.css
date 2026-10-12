@@ -91,7 +91,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
   text-shadow: 3px 3px 0 var(--tinta);
 }
 .marca__rojo { color: var(--rojo); }
-.marca__lema { color: rgb(255 255 255 / 0.88); font-size: 0.95rem; font-weight: 500; text-shadow: 0 1px 2px rgb(0 0 0 / 0.3); }
+.marca__lema { max-width: 56ch; color: rgb(255 255 255 / 0.88); font-size: 0.95rem; font-weight: 500; text-shadow: 0 1px 2px rgb(0 0 0 / 0.3); }
 
 /* ---------- Rejilla principal ---------- */
 .rejilla {
