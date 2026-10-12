@@ -34,3 +34,6 @@ export const fechaCorta = (iso) => FORMATO_FECHA.format(new Date(iso));
 
 // Une la ruta base de la web (import.meta.env.BASE_URL) con una ruta de /public
 export const ruta = (p) => import.meta.env.BASE_URL.replace(/\/$/, '') + '/' + p.replace(/^\//, '');
+
+// Favicon de la web de una noticia (servicio de Google: devuelve un globo genérico si la web no tiene)
+export const favicon = (enlace) => `https://www.google.com/s2/favicons?domain=${new URL(enlace).hostname}&sz=32`;
