@@ -314,7 +314,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
   margin-bottom: 4px;
   border-bottom: 1px solid var(--borde);
 }
-.noticia-destacada img {
+.noticia-destacada > img {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
@@ -327,7 +327,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .noticias { list-style: none; margin: 0; padding: 0; }
 .noticias li + li { border-top: 1px solid var(--borde); }
 .noticia { display: flex; gap: 12px; padding-block: 12px; }
-.noticia img { flex: none; width: 64px; height: 64px; object-fit: cover; border-radius: 8px; }
+.noticia > img { flex: none; width: 64px; height: 64px; object-fit: cover; border-radius: 8px; }
 .noticia__texto { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .noticia__titulo {
   font-weight: 600;
