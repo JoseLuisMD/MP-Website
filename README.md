@@ -36,10 +36,11 @@ Hace falta [Node.js](https://nodejs.org) 22 o superior.
 ```bash
 npm install
 npm run videos   # descarga los vídeos
-npm run dev      # http://localhost:4321/MP-Website/
+npm run dev      # http://localhost:4321/
 ```
 
-## Dominio propio
+## Dominio
 
-En `astro.config.mjs`, cambia `site` por el dominio y quita `base`. Después, en GitHub:
-Settings → Pages → Custom domain.
+La web está en https://mundospixelados.es (registrado en DonDominio). Los DNS apuntan a GitHub Pages:
+4 registros `A` y 4 `AAAA` con las IPs de GitHub para el dominio raíz y un `CNAME` de `www` a `joseluismd.github.io`.
+El dominio está configurado en Settings → Pages → Custom domain y `site` en `astro.config.mjs`.

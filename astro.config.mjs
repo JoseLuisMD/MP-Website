@@ -1,8 +1,6 @@
 import { defineConfig } from 'astro/config';
 
-// Mientras no haya dominio propio, la web vive en joseluismd.github.io/MP-Website.
-// Con dominio: site: 'https://mundospixelados.es' y se quita `base`.
+// La web vive en la raíz del dominio propio (configurado en GitHub: Settings → Pages → Custom domain).
 export default defineConfig({
-  site: 'https://joseluismd.github.io',
-  base: '/MP-Website/',
+  site: 'https://mundospixelados.es',
 });
