@@ -1,0 +1,29 @@
+---
+// Vídeo con reproductor ligero: se muestra la miniatura y el reproductor de YouTube solo se carga al pulsar
+// (la web va más rápida y YouTube no pone cookies hasta entonces).
+import { miniatura, fechaCorta } from '../lib/datos.js';
+
+const { video, destacado = false } = Astro.props;
+const enlace = `https://www.youtube.com/watch?v=${video.id}`;
+const imagen = destacado ? miniatura(video.id, 'maxresdefault') : miniatura(video.id);
+---
+<article class:list={['tarjeta-video', { 'tarjeta-video--destacada': destacado }]}>
+  <div class="reproductor" data-video={video.id}>
+    <button type="button" class="reproductor__boton" aria-label={`Reproducir: ${video.titulo}`}>
+      <img
+        src={imagen}
+        alt=""
+        loading={destacado ? 'eager' : 'lazy'}
+        onerror={destacado ? `this.onerror=null;this.src='${miniatura(video.id)}'` : undefined}
+      />
+      <span class="reproductor__play" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+      </span>
+    </button>
+  </div>
+  <div class="tarjeta-video__info">
+    {destacado && <span class="etiqueta">Último vídeo</span>}
+    <h3 class="tarjeta-video__titulo"><a href={enlace} target="_blank" rel="noopener">{video.titulo}</a></h3>
+    <p class="meta"><time datetime={video.fecha}>{fechaCorta(video.fecha)}</time></p>
+  </div>
+</article>

@@ -1,0 +1,9 @@
+---
+import { portadaShort } from '../lib/datos.js';
+
+const { video } = Astro.props;
+---
+<a class="tarjeta-short" href={`https://www.youtube.com/shorts/${video.id}`} target="_blank" rel="noopener">
+  <img src={portadaShort(video.id)} alt="" loading="lazy" />
+  <span class="tarjeta-short__titulo">{video.titulo}</span>
+</a>

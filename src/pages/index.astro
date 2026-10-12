@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import Cabecera from '../components/Cabecera.astro';
+import TarjetaVideo from '../components/TarjetaVideo.astro';
+import TarjetaShort from '../components/TarjetaShort.astro';
+import Enlaces from '../components/Enlaces.astro';
+import Noticias from '../components/Noticias.astro';
+import { cargarNoticias, cargarVideos } from '../lib/datos.js';
+
+const VIDEOS_EN_PORTADA = 7;   // el destacado + 6 en la cuadrícula
+const SHORTS_EN_PORTADA = 10;
+const NOTICIAS_EN_PORTADA = 10;
+
+const { videos, shorts } = cargarVideos();
+const [destacado, ...siguientes] = videos.slice(0, VIDEOS_EN_PORTADA);
+const noticias = (await cargarNoticias()).slice(0, NOTICIAS_EN_PORTADA);
+---
+<Base>
+  <Cabecera />
+  <div class="contenedor rejilla">
+    <main class="principal">
+      {destacado && <TarjetaVideo video={destacado} destacado />}
+
+      {siguientes.length > 0 && (
+        <section aria-labelledby="titulo-videos">
+          <div class="seccion__cabecera">
+            <h2 class="seccion__titulo" id="titulo-videos">Vídeos</h2>
+            <a class="ver-mas" href="https://www.youtube.com/@MundosPixelados/videos" target="_blank" rel="noopener">Ver todos</a>
+          </div>
+          <div class="cuadricula-videos">
+            {siguientes.map((v) => <TarjetaVideo video={v} />)}
+          </div>
+        </section>
+      )}
+
+      {shorts.length > 0 && (
+        <section aria-labelledby="titulo-shorts">
+          <div class="seccion__cabecera">
+            <h2 class="seccion__titulo" id="titulo-shorts">Shorts</h2>
+            <a class="ver-mas" href="https://www.youtube.com/@MundosPixeladosShorts/shorts" target="_blank" rel="noopener">Ver todos</a>
+          </div>
+          <div class="fila-shorts">
+            {shorts.slice(0, SHORTS_EN_PORTADA).map((v) => <TarjetaShort video={v} />)}
+          </div>
+        </section>
+      )}
+
+      {!destacado && shorts.length === 0 && <p class="vacio">Los vídeos aparecerán aquí en cuanto se actualice la web.</p>}
+    </main>
+
+    <aside class="lateral">
+      <Enlaces />
+      <Noticias noticias={noticias} />
+    </aside>
+  </div>
+
+  <footer class="pie">
+    <div class="contenedor">© {new Date().getFullYear()} Mundos Pixelados</div>
+  </footer>
+
+  <script>
+    // Reproductor ligero: al pulsar la miniatura se cambia por el reproductor de YouTube
+    document.querySelectorAll('.reproductor').forEach((r) => {
+      r.querySelector('button')?.addEventListener('click', () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${r.dataset.video}?autoplay=1&rel=0`;
+        iframe.title = 'Reproductor de YouTube';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        r.replaceChildren(iframe);
+      });
+    });
+
+    // Fechas de las noticias en relativo («hace 2 h»)
+    const relativo = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
+    const UNIDADES = [['day', 86400], ['hour', 3600], ['minute', 60]];
+    document.querySelectorAll('time[data-relativa]').forEach((t) => {
+      const segundos = (new Date(t.dateTime).getTime() - Date.now()) / 1000;
+      if (segundos < -7 * 86400) return; // más de una semana: se deja la fecha
+      const [unidad, valor] = UNIDADES.find(([, s]) => Math.abs(segundos) >= s) ?? ['minute', 60];
+      t.textContent = relativo.format(Math.round(segundos / valor), unidad);
+    });
+  </script>
+</Base>

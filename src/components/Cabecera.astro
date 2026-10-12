@@ -1,0 +1,17 @@
+---
+import { ruta } from '../lib/datos.js';
+---
+<header class="cabecera">
+  <span class="nube nube--1" aria-hidden="true"></span>
+  <span class="nube nube--2" aria-hidden="true"></span>
+  <span class="nube nube--3" aria-hidden="true"></span>
+  <div class="contenedor cabecera__contenido">
+    <a href={ruta('/')} class="marca" aria-label="Mundos Pixelados, inicio">
+      <img class="marca__logo" src={ruta('logo.jpg')} alt="" width="320" height="320" />
+      <span class="marca__texto">
+        <span class="marca__nombre">Mundos <span class="marca__rojo">Pixelados</span></span>
+        <span class="marca__lema">Vídeos, shorts y noticias de videojuegos</span>
+      </span>
+    </a>
+  </div>
+</header>

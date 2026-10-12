@@ -1,0 +1,31 @@
+---
+import { fechaCorta } from '../lib/datos.js';
+
+const { noticias = [] } = Astro.props;
+const [primera, ...resto] = noticias;
+---
+<section class="panel" aria-labelledby="titulo-noticias">
+  <h2 class="panel__titulo" id="titulo-noticias">Últimas noticias</h2>
+  {!primera && <p class="vacio">Pronto habrá noticias por aquí.</p>}
+  {primera && (
+    <a class="noticia-destacada" href={primera.enlace} target="_blank" rel="noopener">
+      {primera.imagen && <img src={primera.imagen} alt="" loading="lazy" referrerpolicy="no-referrer" />}
+      <span class="noticia__titulo">{primera.titulo}</span>
+      <span class="noticia__resumen">{primera.resumen}</span>
+      <span class="meta">{primera.fuente} · <time datetime={primera.fecha} data-relativa>{fechaCorta(primera.fecha)}</time></span>
+    </a>
+  )}
+  <ul class="noticias">
+    {resto.map((n) => (
+      <li>
+        <a class="noticia" href={n.enlace} target="_blank" rel="noopener" title={n.resumen}>
+          {n.imagen && <img src={n.imagen} alt="" loading="lazy" referrerpolicy="no-referrer" />}
+          <span class="noticia__texto">
+            <span class="noticia__titulo">{n.titulo}</span>
+            <span class="meta">{n.fuente} · <time datetime={n.fecha} data-relativa>{fechaCorta(n.fecha)}</time></span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>

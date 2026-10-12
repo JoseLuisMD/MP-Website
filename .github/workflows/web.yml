@@ -1,0 +1,48 @@
+name: Publicar web
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 * * * *"      # cada hora: vídeos nuevos y noticias del bot
+  workflow_dispatch:          # a mano (o desde cron-job.org)
+
+permissions:
+  contents: write             # guardar src/data/videos.json
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - name: Actualizar vídeos
+        run: npm run videos
+      - name: Guardar vídeos
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add src/data/videos.json
+          git diff --staged --quiet || (git commit -m "Actualizar vídeos" && git pull --rebase && git push)
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  publicar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - id: despliegue
+        uses: actions/deploy-pages@v4
