@@ -34,10 +34,12 @@ scripts/actualizar-videos.mjs
 Hace falta [Node.js](https://nodejs.org) 22 o superior.
 
 ```bash
-npm install
+npm ci           # instala las dependencias (las versiones fijadas en package-lock.json)
 npm run videos   # descarga los vídeos
 npm run dev      # http://localhost:4321/
 ```
+
+Para actualizar las dependencias: `npm update`, comprobar que `npm run build` funciona y subir el `package-lock.json`.
 
 ## Dominio
 

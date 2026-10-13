@@ -22,7 +22,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
+          cache: npm                # guarda las dependencias entre ejecuciones
+      - run: npm ci                 # instala exactamente las versiones de package-lock.json
       - name: Actualizar vídeos
         run: npm run videos
       - name: Guardar vídeos
