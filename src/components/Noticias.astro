@@ -5,6 +5,10 @@ import { favicon, fechaCorta } from '../lib/datos.js';
 
 const POR_PAGINA = 5;
 
+// Las noticias de webs en otro idioma llevan una etiqueta («EN»): el título y el resumen están traducidos, el artículo no
+const IDIOMAS = { en: 'inglés', fr: 'francés', de: 'alemán', it: 'italiano', pt: 'portugués' };
+const idioma = (n) => (n.idioma && n.idioma !== 'es' ? n.idioma : null);
+
 const { noticias = [] } = Astro.props;
 const [primera, ...resto] = noticias;
 const paginas = [];
@@ -18,7 +22,7 @@ for (let i = 0; i < resto.length; i += POR_PAGINA) paginas.push(resto.slice(i, i
       {primera.imagen && <img src={primera.imagen} alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()" />}
       <span class="noticia__titulo">{primera.titulo}</span>
       <span class="noticia__resumen">{primera.resumen}</span>
-      <span class="meta"><img class="meta__favicon" src={favicon(primera.enlace)} alt="" width="16" height="16" loading="lazy" onerror="this.remove()" />{primera.fuente} · <time datetime={primera.fecha} data-relativa>{fechaCorta(primera.fecha)}</time></span>
+      <span class="meta"><img class="meta__favicon" src={favicon(primera.enlace)} alt="" width="16" height="16" loading="lazy" onerror="this.remove()" />{primera.fuente}{idioma(primera) && <span class="idioma" title={`Noticia original en ${IDIOMAS[idioma(primera)] ?? idioma(primera)}`}>{idioma(primera).toUpperCase()}</span>} · <time datetime={primera.fecha} data-relativa>{fechaCorta(primera.fecha)}</time></span>
     </a>
   )}
   {paginas.length > 0 && (
@@ -31,7 +35,7 @@ for (let i = 0; i < resto.length; i += POR_PAGINA) paginas.push(resto.slice(i, i
                 {n.imagen && <img src={n.imagen} alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()" />}
                 <span class="noticia__texto">
                   <span class="noticia__titulo">{n.titulo}</span>
-                  <span class="meta"><img class="meta__favicon" src={favicon(n.enlace)} alt="" width="16" height="16" loading="lazy" onerror="this.remove()" />{n.fuente} · <time datetime={n.fecha} data-relativa>{fechaCorta(n.fecha)}</time></span>
+                  <span class="meta"><img class="meta__favicon" src={favicon(n.enlace)} alt="" width="16" height="16" loading="lazy" onerror="this.remove()" />{n.fuente}{idioma(n) && <span class="idioma" title={`Noticia original en ${IDIOMAS[idioma(n)] ?? idioma(n)}`}>{idioma(n).toUpperCase()}</span>} · <time datetime={n.fecha} data-relativa>{fechaCorta(n.fecha)}</time></span>
                 </span>
               </a>
             </li>
