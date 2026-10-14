@@ -6,15 +6,18 @@ import TarjetaShort from '../components/TarjetaShort.astro';
 import Enlaces from '../components/Enlaces.astro';
 import Noticias from '../components/Noticias.astro';
 import Suscribir from '../components/Suscribir.astro';
-import { cargarNoticias, cargarVideos } from '../lib/datos.js';
+import Resenas from '../components/Resenas.astro';
+import { cargarNoticias, cargarResenas, cargarVideos } from '../lib/datos.js';
 
 const VIDEOS_EN_PORTADA = 7;   // el destacado + 6 en la cuadrícula
 const SHORTS_EN_PORTADA = 10;
 const NOTICIAS_EN_PORTADA = 30;  // la destacada + 29 en páginas de 5
+const RESENAS_EN_PORTADA = 9;    // micro-reseñas del Conservador de Steam
 
 const { videos, shorts } = cargarVideos();
 const [destacado, ...siguientes] = videos.slice(0, VIDEOS_EN_PORTADA);
 const noticias = (await cargarNoticias()).slice(0, NOTICIAS_EN_PORTADA);
+const resenas = (await cargarResenas()).slice(0, RESENAS_EN_PORTADA);
 ---
 <Base>
   <Cabecera />
@@ -60,6 +63,8 @@ const noticias = (await cargarNoticias()).slice(0, NOTICIAS_EN_PORTADA);
       <Noticias noticias={noticias} />
     </aside>
   </div>
+
+  {resenas.length > 0 && <Resenas resenas={resenas} />}
 
   <footer class="pie">
     <div class="contenedor">© {new Date().getFullYear()} Mundos Pixelados</div>

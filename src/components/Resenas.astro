@@ -1,0 +1,42 @@
+---
+// Micro-reseñas del Conservador de Steam: sección a todo el ancho, debajo de vídeos, shorts y noticias.
+import { siSteam } from 'simple-icons';
+import { CONSERVADOR_STEAM } from '../lib/datos.js';
+
+const { resenas = [] } = Astro.props;
+const ICONOS = { recomendado: '👍', 'no-recomendado': '👎', informativo: 'ℹ️' };
+---
+<section class="contenedor resenas" aria-labelledby="titulo-resenas">
+  <div class="seccion__cabecera">
+    <h2 class="seccion__titulo" id="titulo-resenas">Reseñas en Steam</h2>
+    <div class="seccion__acciones">
+      <a class="suscribir suscribir--steam" href={CONSERVADOR_STEAM} target="_blank" rel="noopener"
+         aria-label="Seguir a Mundos Pixelados en Steam">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siSteam.path} /></svg>
+        Seguir en Steam
+      </a>
+      <a class="ver-mas" href={CONSERVADOR_STEAM} target="_blank" rel="noopener">Ver todas</a>
+    </div>
+  </div>
+  <div class="cuadricula-resenas">
+    {resenas.map((r) => (
+      <article class="resena">
+        <a class="resena__imagen" href={r.tienda} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src={r.imagen} alt="" loading="lazy" width="460" height="215" />
+        </a>
+        <div class="resena__cuerpo">
+          <p class="resena__veredicto">
+            <span class={`veredicto veredicto--${r.veredicto}`}>{ICONOS[r.veredicto]} {r.veredictoTexto}</span>
+            {r.fecha && <span class="meta">{r.fecha}</span>}
+          </p>
+          <h3 class="resena__juego"><a href={r.tienda} target="_blank" rel="noopener">{r.juego}</a></h3>
+          <p class="resena__texto">{r.texto}</p>
+          <p class="resena__enlaces">
+            {r.resena && <a href={r.resena} target="_blank" rel="noopener">Ver reseña completa</a>}
+            <a href={r.tienda} target="_blank" rel="noopener">Ver en Steam</a>
+          </p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
