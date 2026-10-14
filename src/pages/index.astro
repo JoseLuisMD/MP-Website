@@ -17,7 +17,8 @@ const RESENAS_EN_PORTADA = 9;    // micro-reseñas del Conservador de Steam
 const { videos, shorts } = cargarVideos();
 const [destacado, ...siguientes] = videos.slice(0, VIDEOS_EN_PORTADA);
 const noticias = (await cargarNoticias()).slice(0, NOTICIAS_EN_PORTADA);
-const resenas = (await cargarResenas()).slice(0, RESENAS_EN_PORTADA);
+const steam = await cargarResenas();
+const resenas = steam.resenas.slice(0, RESENAS_EN_PORTADA);
 ---
 <Base>
   <Cabecera />
@@ -64,7 +65,7 @@ const resenas = (await cargarResenas()).slice(0, RESENAS_EN_PORTADA);
     </aside>
   </div>
 
-  {resenas.length > 0 && <Resenas resenas={resenas} />}
+  {resenas.length > 0 && <Resenas resenas={resenas} total={steam.total} />}
 
   <footer class="pie">
     <div class="contenedor">© {new Date().getFullYear()} Mundos Pixelados</div>

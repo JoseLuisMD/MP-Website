@@ -3,7 +3,7 @@
 import { siSteam } from 'simple-icons';
 import { CONSERVADOR_STEAM } from '../lib/datos.js';
 
-const { resenas = [] } = Astro.props;
+const { resenas = [], total = null } = Astro.props;
 const ICONOS = { recomendado: '👍', 'no-recomendado': '👎', informativo: 'ℹ️' };
 ---
 <section class="contenedor resenas" aria-labelledby="titulo-resenas">
@@ -15,7 +15,7 @@ const ICONOS = { recomendado: '👍', 'no-recomendado': '👎', informativo: '�
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siSteam.path} /></svg>
         Seguir en Steam
       </a>
-      <a class="ver-mas" href={CONSERVADOR_STEAM} target="_blank" rel="noopener">Ver todas</a>
+      <a class="ver-mas" href={CONSERVADOR_STEAM} target="_blank" rel="noopener">{total ? `Ver las ${total}` : 'Ver todas'}</a>
     </div>
   </div>
   <div class="cuadricula-resenas">

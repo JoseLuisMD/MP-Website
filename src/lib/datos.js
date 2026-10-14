@@ -83,11 +83,12 @@ export async function cargarResenas() {
   try {
     const r = await fetch(RESENAS_URL, { headers: { 'Accept-Language': 'es-ES' } });
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const { success, results_html } = await r.json();
+    const { success, results_html, total_count } = await r.json();
     if (success !== 1 || typeof results_html !== 'string') throw new Error('respuesta inesperada');
-    return results_html.split('class="recommendation"').slice(1).map(leerResena).filter(Boolean);
+    const resenas = results_html.split('class="recommendation"').slice(1).map(leerResena).filter(Boolean);
+    return { resenas, total: Number(total_count) || null };   // total: cuántas reseñas tiene el conservador
   } catch (e) {
     console.warn(`No se pudieron cargar las reseñas de Steam: ${e.message}`);
-    return [];
+    return { resenas: [], total: null };
   }
 }
