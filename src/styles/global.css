@@ -71,15 +71,23 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 @keyframes deriva { 50% { translate: 60px 0; } }
 @media (max-width: 640px) { .nube { display: none; } }
 
-/* Nubes grandes (PC): cruzan el hueco de la derecha y se desvanecen antes de llegar al título */
+/* Nubes grandes (PC): cruzan la cabecera de derecha a izquierda pasando por detrás del logo y el título.
+   Una máscara las oculta entre el logo y el final del título (y las desvanece en los bordes), así que la misma
+   nube desaparece al llegar al título y reaparece a la izquierda del logo (si hay hueco, en pantallas anchas). */
 .cielo {
+  --logo: max(16px, (100% - 1200px) / 2);   /* donde empieza el logo */
+  --titulo: calc(var(--logo) + 760px);     /* donde acaba el título */
   position: absolute;
   top: 0;
   bottom: 50px;
+  left: 0;
   right: 0;
-  left: calc(max(16px, (100% - 1200px) / 2) + 740px); /* donde acaba el título */
   overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, #000 25%, #000 85%, transparent);
+  mask-image: linear-gradient(to right,
+    transparent 0, #000 60px,                                  /* salida por la izquierda */
+    #000 calc(var(--logo) - 50px), transparent var(--logo),     /* se oculta tras el logo... */
+    transparent var(--titulo), #000 calc(var(--titulo) + 160px), /* ...y hasta el final del título */
+    #000 calc(100% - 80px), transparent 100%);                   /* entrada por la derecha */
   display: none;
 }
 .nube-grande {
@@ -91,9 +99,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
   image-rendering: pixelated;
   animation: cruzar 70s linear infinite;
 }
-.nube-grande--1 { top: 16px; animation-delay: -20s; }
-.nube-grande--2 { top: 62px; width: 114px; height: 39px; opacity: 0.75; animation-duration: 95s; animation-delay: -70s; }
-.nube-grande--3 { top: 98px; width: 133px; height: 46px; opacity: 0.9; animation-duration: 80s; animation-delay: -45s; }
+.nube-grande--1 { top: 16px; animation-duration: 155s; animation-delay: -40s; }
+.nube-grande--2 { top: 62px; width: 114px; height: 39px; opacity: 0.75; animation-duration: 210s; animation-delay: -150s; }
+.nube-grande--3 { top: 98px; width: 133px; height: 46px; opacity: 0.9; animation-duration: 175s; animation-delay: -95s; }
 @keyframes cruzar { from { left: 100%; } to { left: -160px; } }
 @media (min-width: 1150px) {
   .cielo { display: block; }
