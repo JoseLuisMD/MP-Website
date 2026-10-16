@@ -96,3 +96,20 @@ export async function cargarResenas() {
 // Nombre corto para los eventos de clic de GoatCounter: «Comunidad Discord» → «comunidad-discord»
 export const slug = (texto) =>
   texto.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+// Comunidad de Discord: miembros y conectados a partir del enlace de invitación (API pública de Discord, sin clave).
+// Se piden al construir la web y el navegador los vuelve a pedir al cargar la página (Discord lo permite).
+export const discordInvitacion = (url) => url.split('/').filter(Boolean).pop();
+
+export async function cargarDiscord(codigo) {
+  try {
+    const r = await fetch(`https://discord.com/api/v10/invites/${codigo}?with_counts=true`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const d = await r.json();
+    if (!Number.isFinite(d.approximate_member_count)) throw new Error('respuesta inesperada');
+    return { miembros: d.approximate_member_count, conectados: d.approximate_presence_count ?? 0 };
+  } catch (e) {
+    console.warn(`No se pudieron cargar los datos de Discord: ${e.message}`);
+    return null;
+  }
+}

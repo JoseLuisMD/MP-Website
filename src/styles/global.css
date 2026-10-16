@@ -197,6 +197,37 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .suscribir--steam:hover { background: rgb(102 192 244 / 0.15); color: #d2ecfc; }
 
 /* Reseñas en Steam: a todo el ancho, debajo de las dos columnas */
+/* Tarjeta de Discord en el lateral, debajo de «¡Síguenos!» */
+.discord {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  border-radius: var(--radio);
+  background: linear-gradient(135deg, #5865f2, #404eed);
+  color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.discord:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -12px #5865f2; }
+.discord__fila { display: flex; align-items: center; gap: 12px; }
+.discord__fila svg { width: 34px; height: 34px; flex: none; fill: #fff; }
+.discord__titulo { font-weight: 700; font-size: 1rem; line-height: 1.25; }
+.discord__datos { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.85rem; }
+.discord__datos[hidden], .discord__conectados[hidden] { display: none; }
+.discord__conectados { display: inline-flex; align-items: center; gap: 6px; }
+.discord__conectados::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #57f287; }
+.discord__boton {
+  align-self: flex-start;
+  padding: 7px 16px;
+  border-radius: 8px;
+  background: #fff;
+  color: #404eed;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.discord:hover .discord__boton { background: #eef0ff; }
+
 .resenas { padding-bottom: 56px; }
 .cuadricula-resenas {
   display: grid;

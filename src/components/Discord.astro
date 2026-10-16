@@ -1,0 +1,45 @@
+---
+// Tarjeta para unirse a la comunidad de Discord, con los miembros y los conectados.
+// El enlace sale de «Comunidad Discord» en redes.js (que por eso no sale en la lista de «¡Síguenos!»).
+import { siDiscord } from 'simple-icons';
+import { REDES } from '../data/redes.js';
+import { cargarDiscord, discordInvitacion } from '../lib/datos.js';
+
+const enlace = REDES.find((r) => r.icono === 'siDiscord')?.url;
+const codigo = enlace && discordInvitacion(enlace);
+const datos = codigo ? await cargarDiscord(codigo) : null;
+const numero = (n) => n.toLocaleString('es-ES');
+---
+{enlace && (
+  <a class="discord" href={enlace} target="_blank" rel="noopener" data-discord={codigo}
+     data-goatcounter-click="discord-unirse" data-goatcounter-title="Unirse a Discord">
+    <span class="discord__fila">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siDiscord.path} /></svg>
+      <span class="discord__titulo">Únete a nuestra comunidad de Discord</span>
+    </span>
+    <span class="discord__datos" hidden={!datos}>
+      <span class="discord__conectados" hidden={!datos?.conectados}><b data-conectados>{datos && numero(datos.conectados)}</b> conectados</span>
+      <span><b data-miembros>{datos && numero(datos.miembros)}</b> miembros</span>
+    </span>
+    <span class="discord__boton">Unirse al servidor</span>
+  </a>
+)}
+
+<script>
+  // Al cargar la página se vuelven a pedir las cifras a Discord para que los conectados estén al día
+  // (la misma petición que cargarDiscord() en datos.js; no se importa para no meter datos.js en el JS de la página)
+  const tarjeta = document.querySelector<HTMLElement>('.discord[data-discord]');
+  if (tarjeta) {
+    fetch(`https://discord.com/api/v10/invites/${tarjeta.dataset.discord}?with_counts=true`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => {
+        if (!Number.isFinite(d.approximate_member_count)) return;
+        const conectados = d.approximate_presence_count ?? 0;
+        tarjeta.querySelector('[data-miembros]')!.textContent = d.approximate_member_count.toLocaleString('es-ES');
+        tarjeta.querySelector('[data-conectados]')!.textContent = conectados.toLocaleString('es-ES');
+        tarjeta.querySelector<HTMLElement>('.discord__conectados')!.hidden = conectados === 0;
+        tarjeta.querySelector<HTMLElement>('.discord__datos')!.hidden = false;
+      })
+      .catch(() => {});   // si falla, se quedan las cifras de cuando se construyó la web
+  }
+</script>
