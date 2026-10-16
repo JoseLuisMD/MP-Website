@@ -9,6 +9,8 @@
     "videos": "node scripts/actualizar-videos.mjs"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/silkscreen": "^5.3.0",
     "astro": "^5.7.0",
     "fast-xml-parser": "^5.2.0",
     "simple-icons": "^13.0.0"

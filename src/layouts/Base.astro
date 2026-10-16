@@ -1,4 +1,12 @@
 ---
+// Fuentes alojadas en la propia web (paquetes @fontsource), no en Google Fonts: más rápido y sin enviar la IP
+// de los visitantes a Google. Solo el juego latino, que incluye todo lo del español (tildes, ñ, ¡, ¿).
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/inter/latin-700.css';
+import '@fontsource/silkscreen/latin-400.css';
+import '@fontsource/silkscreen/latin-700.css';
 import '../styles/global.css';
 import { ruta } from '../lib/datos.js';
 import { REDES } from '../data/redes.js';
@@ -55,9 +63,6 @@ const datos = {
     <link rel="icon" type="image/png" href={ruta('favicon.png')} />
     <link rel="apple-touch-icon" href={ruta('apple-touch-icon.jpg')} />
     <link rel="sitemap" href={ruta('sitemap.xml')} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
     <script type="application/ld+json" set:html={JSON.stringify(datos)} />
   </head>
   <body>
