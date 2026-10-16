@@ -2,6 +2,7 @@
 // Botón «Suscribirse»: abre el canal en YouTube con la ventana de confirmación de suscripción ya abierta
 // (desde una web no se puede suscribir directamente: YouTube siempre pide confirmar en su cuenta).
 import { siYoutube } from 'simple-icons';
+import { slug } from '../lib/datos.js';
 
 const { canal, nombre } = Astro.props;
 ---
@@ -11,6 +12,8 @@ const { canal, nombre } = Astro.props;
   target="_blank"
   rel="noopener"
   aria-label={`Suscribirse a ${nombre} en YouTube`}
+  data-goatcounter-click={`suscribir-${slug(nombre)}`}
+  data-goatcounter-title={`Suscribirse: ${nombre}`}
 >
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siYoutube.path} /></svg>
   Suscribirse

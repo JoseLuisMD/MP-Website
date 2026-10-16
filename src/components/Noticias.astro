@@ -1,7 +1,7 @@
 ---
 // La noticia más reciente, destacada; el resto, en páginas de POR_PAGINA que se pasan deslizando
 // (dedo o trackpad) o con las flechas y los indicadores.
-import { favicon, fechaCorta } from '../lib/datos.js';
+import { favicon, fechaCorta, slug } from '../lib/datos.js';
 
 const POR_PAGINA = 5;
 
@@ -18,7 +18,8 @@ for (let i = 0; i < resto.length; i += POR_PAGINA) paginas.push(resto.slice(i, i
   <h2 class="panel__titulo" id="titulo-noticias">Últimas noticias</h2>
   {!primera && <p class="vacio">Pronto habrá noticias por aquí.</p>}
   {primera && (
-    <a class="noticia-destacada" href={primera.enlace} target="_blank" rel="noopener">
+    <a class="noticia-destacada" href={primera.enlace} target="_blank" rel="noopener"
+       data-goatcounter-click={`noticia-${slug(primera.fuente)}`} data-goatcounter-title={`Noticia: ${primera.titulo}`}>
       {primera.imagen && <img src={primera.imagen} alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()" />}
       <span class="noticia__titulo">{primera.titulo}</span>
       <span class="noticia__resumen">{primera.resumen}</span>
@@ -31,7 +32,8 @@ for (let i = 0; i < resto.length; i += POR_PAGINA) paginas.push(resto.slice(i, i
         <ul class="noticias pagina" aria-label={`Página ${p + 1} de ${paginas.length}`}>
           {pagina.map((n) => (
             <li>
-              <a class="noticia" href={n.enlace} target="_blank" rel="noopener" title={n.resumen}>
+              <a class="noticia" href={n.enlace} target="_blank" rel="noopener" title={n.resumen}
+                 data-goatcounter-click={`noticia-${slug(n.fuente)}`} data-goatcounter-title={`Noticia: ${n.titulo}`}>
                 {n.imagen && <img src={n.imagen} alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()" />}
                 <span class="noticia__texto">
                   <span class="noticia__titulo">{n.titulo}</span>

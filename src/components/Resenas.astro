@@ -11,7 +11,8 @@ const ICONOS = { recomendado: '👍', 'no-recomendado': '👎', informativo: '�
     <h2 class="seccion__titulo" id="titulo-resenas">Nuestras reseñas en Steam</h2>
     <div class="seccion__acciones">
       <a class="suscribir suscribir--steam" href={CONSERVADOR_STEAM} target="_blank" rel="noopener"
-         aria-label="Seguir a Mundos Pixelados en Steam">
+         aria-label="Seguir a Mundos Pixelados en Steam" data-goatcounter-click="seguir-steam"
+         data-goatcounter-title="Seguir en Steam">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siSteam.path} /></svg>
         Seguir en Steam
       </a>
@@ -32,8 +33,10 @@ const ICONOS = { recomendado: '👍', 'no-recomendado': '👎', informativo: '�
           <h3 class="resena__juego"><a href={r.tienda} target="_blank" rel="noopener">{r.juego}</a></h3>
           <p class="resena__texto">{r.texto}</p>
           <p class="resena__enlaces">
-            {r.resena && <a href={r.resena} target="_blank" rel="noopener">Ver reseña en vídeo</a>}
-            <a class="resena__steam" href={r.tienda} target="_blank" rel="noopener">Ver en Steam</a>
+            {r.resena && <a href={r.resena} target="_blank" rel="noopener" data-goatcounter-click="resena-video"
+                            data-goatcounter-title={`Reseña en vídeo: ${r.juego}`}>Ver reseña en vídeo</a>}
+            <a class="resena__steam" href={r.tienda} target="_blank" rel="noopener" data-goatcounter-click="resena-steam"
+               data-goatcounter-title={`Ver en Steam: ${r.juego}`}>Ver en Steam</a>
           </p>
         </div>
       </article>

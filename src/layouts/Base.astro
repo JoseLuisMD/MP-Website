@@ -16,6 +16,10 @@ const {
   descripcion = 'Somos 2 amigos a los que les apasionan los videojuegos. Análisis, curiosidades, tops, estadísticas y noticias en vídeo.',
 } = Astro.props;
 
+// Estadísticas de visitas con GoatCounter (sin cookies, no hace falta banner). Panel: https://mundospixelados.goatcounter.com
+// Si la cuenta usa otro código, se cambia aquí. Los clics se cuentan con el atributo data-goatcounter-click.
+const GOATCOUNTER = 'mundospixelados';
+
 const canonica = new URL(Astro.url.pathname, Astro.site);
 const imagen = new URL(ruta('og.jpg'), Astro.site);
 
@@ -64,6 +68,9 @@ const datos = {
     <link rel="apple-touch-icon" href={ruta('apple-touch-icon.jpg')} />
     <link rel="sitemap" href={ruta('sitemap.xml')} />
     <script type="application/ld+json" set:html={JSON.stringify(datos)} />
+    {GOATCOUNTER && (
+      <script is:inline async data-goatcounter={`https://${GOATCOUNTER}.goatcounter.com/count`} src="https://gc.zgo.at/count.js"></script>
+    )}
   </head>
   <body>
     <slot />

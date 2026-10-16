@@ -1,6 +1,7 @@
 ---
 import * as iconos from 'simple-icons';
 import { REDES } from '../data/redes.js';
+import { slug } from '../lib/datos.js';
 
 // Icono genérico de enlace por si simple-icons no tiene el de alguna red
 const ENLACE = 'M10.6 13.4a1 1 0 0 1 0-1.4l3.4-3.4a1 1 0 1 1 1.4 1.4L12 13.4a1 1 0 0 1-1.4 0zM7 18a4 4 0 0 1-2.8-6.8l2.1-2.1a1 1 0 1 1 1.4 1.4l-2.1 2.1a2 2 0 0 0 2.8 2.8l2.1-2.1a1 1 0 0 1 1.4 1.4l-2.1 2.1A4 4 0 0 1 7 18zm8.3-3.9a1 1 0 0 1-.7-1.7l2.1-2.1a2 2 0 0 0-2.8-2.8l-2.1 2.1a1 1 0 0 1-1.4-1.4l2.1-2.1a4 4 0 0 1 5.6 5.6L16 13.8a1 1 0 0 1-.7.3z';
@@ -15,7 +16,8 @@ const redes = REDES.filter((r) => r.url).map((r) => {
   <ul class="enlaces">
     {redes.map((r) => (
       <li>
-        <a class="enlace" href={r.url} target="_blank" rel="noopener" style={`--color-red: ${r.color}`}>
+        <a class="enlace" href={r.url} target="_blank" rel="noopener" style={`--color-red: ${r.color}`}
+           data-goatcounter-click={`red-${slug(r.nombre)}`} data-goatcounter-title={`Enlace: ${r.nombre}`}>
           <span class="enlace__icono" aria-hidden="true"><svg viewBox="0 0 24 24"><path d={r.path} /></svg></span>
           <span class="enlace__nombre">{r.nombre}</span>
           <svg class="enlace__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>

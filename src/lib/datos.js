@@ -92,3 +92,7 @@ export async function cargarResenas() {
     return { resenas: [], total: null };
   }
 }
+
+// Nombre corto para los eventos de clic de GoatCounter: «Comunidad Discord» → «comunidad-discord»
+export const slug = (texto) =>
+  texto.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
