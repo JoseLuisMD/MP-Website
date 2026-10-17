@@ -10,19 +10,29 @@ const redes = REDES.filter((r) => r.url && !r.tarjeta).map((r) => {
   const icono = iconos[r.icono];
   return { ...r, path: icono?.path ?? ENLACE, color: r.color ?? (icono ? `#${icono.hex}` : 'var(--superficie-2)') };
 });
+// Primero nuestras redes de vídeo y, tras el subtítulo «También en...», el resto (campo `grupo` de redes.js)
+const grupos = [
+  { redes: redes.filter((r) => r.grupo === 'videos') },
+  { subtitulo: 'También en...', redes: redes.filter((r) => r.grupo !== 'videos') },
+];
 ---
 <section class="panel" aria-labelledby="titulo-enlaces">
   <h2 class="panel__titulo" id="titulo-enlaces">¡Síguenos!</h2>
-  <ul class="enlaces">
-    {redes.map((r) => (
-      <li>
-        <a class="enlace" href={r.url} target="_blank" rel="noopener" style={`--color-red: ${r.color}`}
-           data-goatcounter-click={`red-${slug(r.nombre)}`} data-goatcounter-title={`Enlace: ${r.nombre}`}>
-          <span class="enlace__icono" aria-hidden="true"><svg viewBox="0 0 24 24"><path d={r.path} /></svg></span>
-          <span class="enlace__nombre">{r.nombre}</span>
-          <svg class="enlace__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
-        </a>
-      </li>
-    ))}
-  </ul>
+  {grupos.filter((g) => g.redes.length).map((g) => (
+    <>
+      {g.subtitulo && <h3 class="panel__subtitulo">{g.subtitulo}</h3>}
+      <ul class="enlaces">
+        {g.redes.map((r) => (
+          <li>
+            <a class="enlace" href={r.url} target="_blank" rel="noopener" style={`--color-red: ${r.color}`}
+               data-goatcounter-click={`red-${slug(r.nombre)}`} data-goatcounter-title={`Enlace: ${r.nombre}`}>
+              <span class="enlace__icono" aria-hidden="true"><svg viewBox="0 0 24 24"><path d={r.path} /></svg></span>
+              <span class="enlace__nombre">{r.nombre}</span>
+              <svg class="enlace__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </>
+  ))}
 </section>

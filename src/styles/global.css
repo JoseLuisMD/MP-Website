@@ -447,6 +447,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .enlace__flecha { width: 18px; height: 18px; fill: none; stroke: var(--texto-suave); stroke-width: 2; transition: stroke 0.2s; }
 .enlace:hover .enlace__flecha { stroke: var(--texto); }
 
+/* Subtítulo dentro de un panel (p. ej. «También en...» en «¡Síguenos!») */
+.panel__subtitulo { margin: 18px 0 10px; font-family: var(--fuente-pixel); font-weight: 400; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--texto-suave); }
+
 /* Noticias */
 .noticia-destacada {
   display: flex;
