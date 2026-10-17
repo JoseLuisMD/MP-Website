@@ -533,6 +533,43 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
   font-size: 0.85rem;
   text-align: center;
 }
+.pie p { margin: 0; }
+.pie__aviso { margin-top: 8px !important; font-size: 0.75rem; opacity: 0.8; }
+
+/* Listas de imports de Japón en Amazon: en la columna principal, debajo de los Shorts */
+.cuadricula-listas { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.lista-amazon {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;   /* entre el título y el botón */
+  padding: 14px 18px;
+  border-radius: var(--radio);
+  color: #fff;
+  background: var(--fondo-lista);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.lista-amazon:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2), var(--sombra); }
+.lista-amazon--switch { --fondo-lista: linear-gradient(135deg, #e60012, #8a000b); }
+.lista-amazon--ps { --fondo-lista: linear-gradient(135deg, #0070d1, #00306b); }
+.lista-amazon__titulo { font-family: var(--fuente-pixel); font-weight: 700; font-size: 1rem; line-height: 1.15; text-wrap: balance; text-shadow: 2px 2px 0 rgb(0 0 0 / 0.35); }
+.lista-amazon__boton {
+  margin-top: auto;   /* al pie, alineado con el de la otra tarjeta */
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: #ff9900;
+  color: #111;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.lista-amazon__boton svg { width: 16px; height: 16px; fill: currentColor; }
+.lista-amazon__icono { position: absolute; right: -14px; bottom: -18px; width: 96px; height: 96px; fill: rgb(255 255 255 / 0.1); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }

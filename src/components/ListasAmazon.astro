@@ -1,0 +1,25 @@
+---
+// Tarjetas que llevan a nuestras listas de imports japoneses en Amazon (con nuestro ID de asociado).
+import { siAmazon, siNintendoswitch, siPlaystation } from 'simple-icons';
+import { LISTAS_AMAZON, enlaceLista } from '../data/amazon.js';
+
+const ICONOS = { switch: siNintendoswitch, ps: siPlaystation };
+---
+<section aria-labelledby="titulo-imports">
+  <div class="seccion__cabecera">
+    <h2 class="seccion__titulo" id="titulo-imports">Imports Japón exclusivos recomendados</h2>
+  </div>
+  <div class="cuadricula-listas">
+    {LISTAS_AMAZON.map((l) => (
+      <a class={`lista-amazon lista-amazon--${l.plataforma}`} href={enlaceLista(l.id)} target="_blank" rel="sponsored noopener"
+         data-goatcounter-click={`amazon-lista-${l.plataforma}`} data-goatcounter-title={`Amazon: ${l.titulo}`}>
+        {ICONOS[l.plataforma] && <svg class="lista-amazon__icono" viewBox="0 0 24 24" aria-hidden="true"><path d={ICONOS[l.plataforma].path} /></svg>}
+        <span class="lista-amazon__titulo">{l.titulo}</span>
+        <span class="lista-amazon__boton">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siAmazon.path} /></svg>
+          Ver la lista en Amazon.co.jp
+        </span>
+      </a>
+    ))}
+  </div>
+</section>

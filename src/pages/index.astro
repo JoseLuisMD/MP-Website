@@ -8,6 +8,7 @@ import Noticias from '../components/Noticias.astro';
 import Suscribir from '../components/Suscribir.astro';
 import Resenas from '../components/Resenas.astro';
 import Discord from '../components/Discord.astro';
+import ListasAmazon from '../components/ListasAmazon.astro';
 import { cargarNoticias, cargarResenas, cargarVideos } from '../lib/datos.js';
 
 const VIDEOS_EN_PORTADA = 7;   // el destacado + 6 en la cuadrícula
@@ -57,6 +58,8 @@ const resenas = steam.resenas.slice(0, RESENAS_EN_PORTADA);
         </section>
       )}
 
+      <ListasAmazon />
+
       {!destacado && shorts.length === 0 && <p class="vacio">Los vídeos aparecerán aquí en cuanto se actualice la web.</p>}
     </main>
 
@@ -69,8 +72,13 @@ const resenas = steam.resenas.slice(0, RESENAS_EN_PORTADA);
 
   {resenas.length > 0 && <Resenas resenas={resenas} total={steam.total} />}
 
+
   <footer class="pie">
-    <div class="contenedor">© {new Date().getFullYear()} Mundos Pixelados</div>
+    <div class="contenedor">
+      <p>© {new Date().getFullYear()} Mundos Pixelados</p>
+      <p class="pie__aviso">Como Asociado de Amazon, Mundos Pixelados obtiene ingresos por las compras adscritas que cumplen los requisitos aplicables.<br />
+        <span lang="ja">Amazonのアソシエイトとして、Mundos Pixeladosは適格販売により収入を得ています。</span></p>
+    </div>
   </footer>
 
   <script>
