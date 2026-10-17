@@ -15,10 +15,10 @@ const automaticos = await cargarSeguidores(redes);
 for (const r of redes) r.seguidores = automaticos[r.nombre] ?? r.seguidores;
 // «¡Ya somos X!»: la suma de los seguidores de las redes de vídeo que tengan cifra
 const total = redes.filter((r) => r.grupo === 'videos' && Number.isFinite(r.seguidores)).reduce((suma, r) => suma + r.seguidores, 0);
-// Primero nuestras redes de vídeo y, tras el subtítulo «También en...», el resto (campo `grupo` de redes.js)
+// Primero nuestras redes de vídeo y, tras el subtítulo «También estamos en...», el resto (campo `grupo` de redes.js)
 const grupos = [
   { redes: redes.filter((r) => r.grupo === 'videos') },
-  { subtitulo: 'También en...', redes: redes.filter((r) => r.grupo !== 'videos') },
+  { subtitulo: 'También estamos en...', redes: redes.filter((r) => r.grupo !== 'videos') },
 ];
 ---
 <section class="panel" aria-labelledby="titulo-enlaces">

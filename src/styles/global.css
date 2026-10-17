@@ -450,7 +450,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .enlace__seguidores { flex: none; font-size: 0.82rem; font-weight: 700; color: var(--texto-suave); font-variant-numeric: tabular-nums; transition: color 0.2s; }
 .enlace:hover .enlace__seguidores { color: var(--texto); }
 
-/* Subtítulo dentro de un panel (p. ej. «También en...» en «¡Síguenos!») */
+/* Subtítulo dentro de un panel (p. ej. «También estamos en...» en «¡Síguenos!») */
 .panel__subtitulo { margin: 18px 0 10px; font-family: var(--fuente-pixel); font-weight: 400; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--texto-suave); }
 /* Título del panel con un dato a la derecha (p. ej. «¡Ya somos X!» en «¡Síguenos!») */
 .panel__cabecera { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
