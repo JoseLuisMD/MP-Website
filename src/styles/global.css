@@ -545,7 +545,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
   text-align: center;
 }
 .pie p { margin: 0; }
-.pie__aviso { margin-top: 8px !important; font-size: 0.75rem; opacity: 0.8; }
+.pie__aviso { margin-top: 10px !important; font-size: 0.68rem; line-height: 1.5; opacity: 0.55; }   /* aviso obligatorio de Amazon Asociados: discreto, pero legible */
 
 /* Listas de imports de Japón en Amazon: en la columna principal, debajo de los Shorts */
 /* Si la columna principal es más corta que el lateral, la sección (la última) se estira para acabar a su altura */
