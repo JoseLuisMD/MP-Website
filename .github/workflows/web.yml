@@ -33,6 +33,12 @@ jobs:
           git add src/data/videos.json
           git diff --staged --quiet || (git commit -m "Actualizar vídeos" && git pull --rebase && git push)
       - run: npm run build
+        env:                        # seguidores de las redes de vídeo (ver cargarSeguidores en src/lib/datos.js)
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          INSTAGRAM_ID: ${{ secrets.INSTAGRAM_ID }}
+          TIKTOK_SEGUIDORES: ${{ vars.TIKTOK_SEGUIDORES }}   # variable (Settings → Secrets and variables → Actions → Variables)
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

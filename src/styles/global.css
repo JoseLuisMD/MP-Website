@@ -446,6 +446,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .enlace__nombre { flex: 1; min-width: 0; font-weight: 600; font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .enlace__flecha { width: 18px; height: 18px; fill: none; stroke: var(--texto-suave); stroke-width: 2; transition: stroke 0.2s; }
 .enlace:hover .enlace__flecha { stroke: var(--texto); }
+.enlace__seguidores { flex: none; font-size: 0.82rem; font-weight: 700; color: var(--texto-suave); font-variant-numeric: tabular-nums; transition: color 0.2s; }
+.enlace:hover .enlace__seguidores { color: var(--texto); }
 
 /* Subtítulo dentro de un panel (p. ej. «También en...» en «¡Síguenos!») */
 .panel__subtitulo { margin: 18px 0 10px; font-family: var(--fuente-pixel); font-weight: 400; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--texto-suave); }

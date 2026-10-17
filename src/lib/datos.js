@@ -113,3 +113,54 @@ export async function cargarDiscord(codigo) {
     return null;
   }
 }
+
+// Seguidores de las redes con `contador` en redes.js. Se piden al construir la web con las claves de los secretos de
+// GitHub (variables de entorno del workflow); si falta una clave o falla una API, esa red se queda sin cifra.
+//   YOUTUBE_API_KEY          clave de la API de YouTube (Google Cloud)
+//   META_TOKEN               token de la página de Facebook (Graph API), sin caducidad
+//   FACEBOOK_PAGE_ID         ID de la página de Facebook
+//   INSTAGRAM_ID             ID de la cuenta profesional de Instagram vinculada a la página
+//   TIKTOK_SEGUIDORES        (variable, no secreto) seguidores de TikTok, puestos a mano
+async function pedirJson(url, nombre, cabeceras = {}) {
+  try {
+    const r = await fetch(url, { headers: cabeceras });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.json();
+  } catch (e) {
+    console.warn(`No se pudieron cargar los seguidores de ${nombre}: ${e.message}`);
+    return null;
+  }
+}
+
+export async function cargarSeguidores(redes) {
+  const env = process.env;
+  const seguidores = {};   // { nombre de la red: número }
+  const canales = redes.filter((r) => r.contador?.youtube);
+  if (env.YOUTUBE_API_KEY && canales.length) {
+    const ids = canales.map((r) => r.contador.youtube).join(',');
+    const d = await pedirJson(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${ids}&key=${env.YOUTUBE_API_KEY}`, 'YouTube');
+    for (const canal of d?.items ?? []) {
+      const red = canales.find((r) => r.contador.youtube === canal.id);
+      const n = Number(canal.statistics?.subscriberCount);
+      if (red && !canal.statistics?.hiddenSubscriberCount && Number.isFinite(n)) seguidores[red.nombre] = n;
+    }
+  }
+  const meta = { facebook: env.FACEBOOK_PAGE_ID, instagram: env.INSTAGRAM_ID };
+  for (const red of redes.filter((r) => r.contador === 'facebook' || r.contador === 'instagram')) {
+    const id = meta[red.contador];
+    if (!env.META_TOKEN || !id) continue;
+    const d = await pedirJson(`https://graph.facebook.com/${id}?fields=followers_count`, red.nombre,
+      { Authorization: `Bearer ${env.META_TOKEN}` });
+    if (Number.isFinite(d?.followers_count)) seguidores[red.nombre] = d.followers_count;
+  }
+  // TikTok no tiene API sencilla: el número se pone a mano en la variable TIKTOK_SEGUIDORES de GitHub
+  const tiktok = Number(env.TIKTOK_SEGUIDORES);
+  for (const red of redes.filter((r) => r.contador === 'tiktok')) {
+    if (env.TIKTOK_SEGUIDORES && Number.isFinite(tiktok)) seguidores[red.nombre] = tiktok;
+  }
+  return seguidores;
+}
+
+// 3.210 → «3,2 mil»; 1.250.000 → «1,3 M»
+const FORMATO_COMPACTO = new Intl.NumberFormat('es-ES', { notation: 'compact', maximumFractionDigits: 1 });
+export const cifraCorta = (n) => FORMATO_COMPACTO.format(n);
