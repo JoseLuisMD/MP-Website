@@ -139,8 +139,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
   padding-block: 36px 56px;
   align-items: start;
 }
-.principal { display: flex; flex-direction: column; gap: 40px; }
-.lateral { display: flex; flex-direction: column; gap: 24px; }
+.principal { display: flex; flex-direction: column; gap: 40px; align-self: stretch; }   /* tan alta como el lateral (ver .imports) */
+.lateral { display: flex; flex-direction: column; gap: 24px; align-self: stretch; }
+.lateral > section:last-of-type { flex: 1; }   /* el último panel (noticias) crece si el lateral es más corto que la columna principal */
 
 @media (max-width: 960px) {
   .rejilla { grid-template-columns: minmax(0, 1fr); }
@@ -451,6 +452,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 
 /* Subtítulo dentro de un panel (p. ej. «También en...» en «¡Síguenos!») */
 .panel__subtitulo { margin: 18px 0 10px; font-family: var(--fuente-pixel); font-weight: 400; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--texto-suave); }
+/* Título del panel con un dato a la derecha (p. ej. «¡Ya somos X!» en «¡Síguenos!») */
+.panel__cabecera { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+.panel__cabecera .panel__titulo { margin-bottom: 0; }
+.panel__lema { margin: 0; color: var(--texto-suave); font-size: 0.75rem; white-space: nowrap; }
+.panel__lema b { color: var(--verde); font-weight: 700; }
 
 /* Noticias */
 .noticia-destacada {
@@ -542,7 +548,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .pie__aviso { margin-top: 8px !important; font-size: 0.75rem; opacity: 0.8; }
 
 /* Listas de imports de Japón en Amazon: en la columna principal, debajo de los Shorts */
-.cuadricula-listas { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+/* Si la columna principal es más corta que el lateral, la sección (la última) se estira para acabar a su altura */
+.imports { flex: 1; display: flex; flex-direction: column; }
+.cuadricula-listas { flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .lista-amazon {
   position: relative;
   overflow: hidden;
@@ -560,7 +568,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 .lista-amazon:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2), var(--sombra); }
 .lista-amazon--switch { --fondo-lista: linear-gradient(135deg, #e60012, #8a000b); }
 .lista-amazon--ps { --fondo-lista: linear-gradient(135deg, #0070d1, #00306b); }
-.lista-amazon__titulo { font-family: var(--fuente-pixel); font-weight: 700; font-size: 1rem; line-height: 1.15; text-wrap: balance; text-shadow: 2px 2px 0 rgb(0 0 0 / 0.35); }
+.lista-amazon__titulo { font-family: var(--fuente-pixel); font-weight: 700; font-size: 1.4rem; line-height: 1.15; text-wrap: balance; text-shadow: 2px 2px 0 rgb(0 0 0 / 0.35); }
+.lista-amazon__subtitulo { margin-top: -6px; font-size: 0.9rem; font-weight: 600; opacity: 0.9; }
 .lista-amazon__boton {
   margin-top: auto;   /* al pie, alineado con el de la otra tarjeta */
   display: inline-flex;
@@ -575,6 +584,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--verde); outline
 }
 .lista-amazon__boton svg { width: 16px; height: 16px; fill: currentColor; }
 .lista-amazon__icono { position: absolute; right: -14px; bottom: -18px; width: 96px; height: 96px; fill: rgb(255 255 255 / 0.1); }
+/* El logo de PlayStation es apaisado (no ocupa todo el alto de su caja): se agranda para que pese lo mismo que el de Switch */
+.lista-amazon--ps .lista-amazon__icono { width: 116px; height: 116px; right: -18px; bottom: -28px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }

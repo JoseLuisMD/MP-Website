@@ -13,6 +13,8 @@ const redes = REDES.filter((r) => r.url && !r.tarjeta).map((r) => {
 // Seguidores: los que se piden a las APIs y, si no, el número puesto a mano en redes.js
 const automaticos = await cargarSeguidores(redes);
 for (const r of redes) r.seguidores = automaticos[r.nombre] ?? r.seguidores;
+// «¡Ya somos X!»: la suma de los seguidores de las redes de vídeo que tengan cifra
+const total = redes.filter((r) => r.grupo === 'videos' && Number.isFinite(r.seguidores)).reduce((suma, r) => suma + r.seguidores, 0);
 // Primero nuestras redes de vídeo y, tras el subtítulo «También en...», el resto (campo `grupo` de redes.js)
 const grupos = [
   { redes: redes.filter((r) => r.grupo === 'videos') },
@@ -20,7 +22,10 @@ const grupos = [
 ];
 ---
 <section class="panel" aria-labelledby="titulo-enlaces">
-  <h2 class="panel__titulo" id="titulo-enlaces">¡Síguenos!</h2>
+  <div class="panel__cabecera">
+    <h2 class="panel__titulo" id="titulo-enlaces">¡Síguenos!</h2>
+    {total > 0 && <p class="panel__lema">¡Ya somos <b>{total.toLocaleString('es-ES', { useGrouping: 'always' })}</b>!</p>}
+  </div>
   {grupos.filter((g) => g.redes.length).map((g) => (
     <>
       {g.subtitulo && <h3 class="panel__subtitulo">{g.subtitulo}</h3>}

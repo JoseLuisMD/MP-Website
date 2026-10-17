@@ -5,7 +5,7 @@ import { LISTAS_AMAZON, enlaceLista } from '../data/amazon.js';
 
 const ICONOS = { switch: siNintendoswitch, ps: siPlaystation };
 ---
-<section aria-labelledby="titulo-imports">
+<section class="imports" aria-labelledby="titulo-imports">
   <div class="seccion__cabecera">
     <h2 class="seccion__titulo" id="titulo-imports">Imports Japón exclusivos recomendados</h2>
   </div>
@@ -15,6 +15,7 @@ const ICONOS = { switch: siNintendoswitch, ps: siPlaystation };
          data-goatcounter-click={`amazon-lista-${l.plataforma}`} data-goatcounter-title={`Amazon: ${l.titulo}`}>
         {ICONOS[l.plataforma] && <svg class="lista-amazon__icono" viewBox="0 0 24 24" aria-hidden="true"><path d={ICONOS[l.plataforma].path} /></svg>}
         <span class="lista-amazon__titulo">{l.titulo}</span>
+        {l.subtitulo && <span class="lista-amazon__subtitulo">{l.subtitulo}</span>}
         <span class="lista-amazon__boton">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siAmazon.path} /></svg>
           Ver la lista en Amazon.co.jp

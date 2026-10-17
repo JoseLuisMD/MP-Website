@@ -7,12 +7,14 @@ export const LISTAS_AMAZON = [
   {
     id: '1PO89QDN6NYAL',
     plataforma: 'switch',   // switch o ps: el color de la tarjeta
-    titulo: 'NINTENDO SWITCH y NS2',
+    titulo: 'NINTENDO',
+    subtitulo: 'Nintendo Switch 1 y 2',
   },
   {
     id: '9YPCNAETO9LO',
     plataforma: 'ps',
-    titulo: 'PLAYSTATION 5 y PS4',
+    titulo: 'PLAYSTATION',
+    subtitulo: 'PS5 y PS4',
   },
 ];
 
