@@ -63,13 +63,14 @@ const textoDe = (html) =>
 
 function leerResena(bloque) {
   const tienda = bloque.match(/class="store_capsule[^"]*"[^>]*href="(https:\/\/store\.steampowered\.com\/app\/[^"?]+)/)?.[1];
-  const imagen = bloque.match(/<img src="(https:\/\/[^"]+\/header_292x136\.jpg)[^"]*" alt="([^"]*)"/);
+  // Algunos juegos traen la cabecera traducida: header_292x136_spanish.jpg (y entonces no hay header.jpg)
+  const imagen = bloque.match(/<img src="(https:\/\/[^"]+\/header_292x136(?:_\w+)?\.jpg)[^"]*" alt="([^"]*)"/);
   const tipo = bloque.match(/class='color_(\w+)'>([^<]*)</);
   const texto = textoDe(bloque.match(/class="recommendation_desc">([\s\S]*?)<\/div>/)?.[1]);
   if (!tienda || !imagen || !texto) return null;
   return {
     juego: textoDe(imagen[2]),
-    imagen: imagen[1].replace('header_292x136.jpg', 'header.jpg'),   // la cabecera grande (460×215)
+    imagen: imagen[1].replace(/\/header_292x136(_\w+)?\.jpg$/, '/header$1.jpg'),   // la cabecera grande (460×215)
     veredicto: VEREDICTOS[tipo?.[1]] ?? 'informativo',
     veredictoTexto: textoDe(tipo?.[2]) || 'Informativo',
     fecha: textoDe(bloque.match(/class="curator_review_date">([^<]*)</)?.[1]),
